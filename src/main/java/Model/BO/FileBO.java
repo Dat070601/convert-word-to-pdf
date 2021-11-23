@@ -9,10 +9,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-
-
 public class FileBO {
-	public static void ConvertFileToPDF(String docPath, String pdfPath)
+	public void ConvertFileToPDF(String docPath, String pdfPath)
 	{
 //		  InputStream doc = new FileInputStream(new File(docPath));
 //          XWPFDocument document = new XWPFDocument(doc);
@@ -31,7 +29,7 @@ public class FileBO {
 		
 	}
 	
-	public static byte[] DownloadFile()
+	public byte[] DownloadFile()
 	{
 		return FileDAO.DowloadFile();
 	}
