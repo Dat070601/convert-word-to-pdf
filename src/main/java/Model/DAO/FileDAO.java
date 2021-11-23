@@ -12,7 +12,7 @@ public class FileDAO {
 	public FileDAO() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/DULIEU", "root", "");
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ltm", "root", "");
 		} catch (Exception e) {}
 	}
 	public static byte[] DowloadFile() {
