@@ -10,12 +10,15 @@ public class File {
 	private boolean status; 
 	private Blob data;
 	
-	public File(int id_user, Date date, String file_name, boolean status, Blob data) {
+	public File(int id_user, Date date, String file_name, int status, Blob data) {
 		super();
 		this.id_user = id_user;
 		this.date = date;
 		this.file_name = file_name;
-		this.status = status;
+		if(status == 0)
+			this.status = false;
+		else 
+			this.status = true;
 		this.data = data;
 	}
 	public File()
