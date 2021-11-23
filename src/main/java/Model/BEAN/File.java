@@ -1,5 +1,6 @@
 package Model.BEAN;
 
+import java.sql.Blob;
 import java.sql.Date;
 
 public class File {
@@ -7,6 +8,7 @@ public class File {
 	private Date date;
 	private String file_name;
 	private boolean status; 
+	private Blob data;
 	
 	public File(int id_user, Date date, String file_name, boolean status) {
 		super();
@@ -48,4 +50,12 @@ public class File {
 			this.status = true;
 	}
 	
+	public Blob getData()
+	{
+		return data;
+	}
+	public void setData(Blob data)
+	{
+		this.data = data;
+	}
 }
