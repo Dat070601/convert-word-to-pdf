@@ -8,7 +8,7 @@ public class File {
 	private int id_user;
 	private Date date;
 	private String file_name;
-	private boolean status; 
+	private int status; 
 	private Blob data;
 	
 	public File(int id_file, int id_user, Date date, String file_name, int status, Blob data) {
@@ -17,15 +17,8 @@ public class File {
 		this.id_user = id_user;
 		this.date = date;
 		this.file_name = file_name;
-		if(status == 0)
-			this.status = false;
-		else 
-			this.status = true;
+		this.status = status;
 		this.data = data;
-	}
-	public File()
-	{
-		
 	}
 	
 	public int getFileID()
@@ -56,16 +49,12 @@ public class File {
 	public void setFileName(String file_name) {
 		this.file_name = file_name;
 	}
-	public boolean getStatus() {
+	public int getStatus() {
 		return status;
 	}
 	public void setStatus(int status) {
-		if(status == 0)
-			this.status = false;
-		else
-			this.status = true;
+		this.status = status;
 	}
-	
 	public Blob getData()
 	{
 		return data;
