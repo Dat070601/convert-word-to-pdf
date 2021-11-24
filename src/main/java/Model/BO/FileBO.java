@@ -1,5 +1,6 @@
 package Model.BO;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,7 +16,7 @@ import Model.DAO.FileDAO;
 
 public class FileBO {
 
-	public void ConvertFileToPDF(String docPath)
+	public byte[] ConvertFileToPDF(String docPath)
 	{
 		 try {
 			 	String pdfPath = ""; // tạo đường dẫn tới file pdf
@@ -27,13 +28,43 @@ public class FileBO {
 	            PdfConverter.getInstance().convert(document, out, options); // tạo file pdf thành công
 	            doc.close(); 
 	            out.close();
-
+	            return loadFile(pdfPath); // tao mang byte[] cua file PDF
 	        } catch (FileNotFoundException ex) {
 	            System.out.println(ex.getMessage());
+	            return null;
 	        } catch (IOException ex) {
-
 	            System.out.println(ex.getMessage());
+	            return null;
 	        }
+	}
+	
+	public static byte[] readFully(InputStream stream) throws IOException
+	{
+	    byte[] buffer = new byte[8192];
+	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    int bytesRead;
+	    while ((bytesRead = stream.read(buffer)) != -1)
+	    {
+	        baos.write(buffer, 0, bytesRead);
+	    }
+	    return baos.toByteArray();
+	}
+	
+	public static byte[] loadFile(String sourcePath) throws IOException
+	{	
+	    InputStream inputStream = null;
+	    try 
+	    {
+	        inputStream = new FileInputStream(sourcePath);
+	        return readFully(inputStream);
+	    } 
+	    finally
+	    {
+	        if (inputStream != null)
+	        {
+	            inputStream.close();
+	        }
+	    }
 	}
 	
 	public byte[] DownloadFile()
