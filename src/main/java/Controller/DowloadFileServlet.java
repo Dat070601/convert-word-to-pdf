@@ -35,9 +35,9 @@ public class DowloadFileServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	       try {  
-	           int id = 3;
+	           int id = 0;
 	           try {
-	              // id = Integer.parseInt(request.getParameter("id"));
+	               id = Integer.parseInt(request.getParameter("id"));
 	           } catch (Exception e) {
 
 	           }
