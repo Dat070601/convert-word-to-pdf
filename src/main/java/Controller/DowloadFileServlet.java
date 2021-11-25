@@ -48,12 +48,6 @@ public class DowloadFileServlet extends HttpServlet {
 	               return;
 	           }
 	           
-	           if(file.getStatus() == 0)
-	           {
-	        	   response.getWriter().write("File "+ file.getFileName() + " chưa xử lý!");
-	               return;
-	           }
-
 	           String fileName = file.getFileName();
 	           //System.out.println("File Name: " + fileName);
 	           String contentType = this.getServletContext().getMimeType(fileName);
