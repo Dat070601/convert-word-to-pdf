@@ -16,6 +16,10 @@ public class FileBO {
 		ByteArrayInputStream inStream = new ByteArrayInputStream(docFile);
 		// Load Document from inStream
 		Document doc = new Document(inStream);
+		// remove watermark
+		if (doc.getWatermark().getType() == WatermarkType.TEXT) {
+			doc.getWatermark().remove();
+		}
 		// Save the modified document into out stream
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		doc.save(baos, SaveFormat.PDF);
