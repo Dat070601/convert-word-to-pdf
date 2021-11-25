@@ -1,11 +1,14 @@
 package Model.DAO;
 
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.sql.SQLException;
+import java.sql.Date;
+
+import Model.BEAN.File;
 
 public class FileDAO {
 	Connection con;
@@ -15,10 +18,34 @@ public class FileDAO {
 			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/ltm", "root", "");
 		} catch (Exception e) {}
 	}
-	public static byte[] DowloadFile() {
 	
-		return null;
+	
+	public File GetFilePDFFromDB(int id) throws SQLException
+	{
+		String query = "Select * from Storage where id = ?";
+		PreparedStatement pstm = con.prepareStatement(query);
+		pstm.setInt(1,id);
+		ResultSet rs = pstm.executeQuery();
+		if(rs.next())
+		{
+			String file_name  = rs.getString("FileName");
+			int id_user = rs.getInt("UserID");
+			Date date = rs.getDate("Date");
+			Blob data = rs.getBlob("Data");
+			int status = rs.getInt("Status");
+			return new File(id, id_user, date, file_name, status, data);
+		}
+		else return null; // not exist in database
 	}
+	
+	 public void CloseConQuietly() {
+	       try {
+	           if (con != null) {
+	               con.close();
+	           }
+	       } catch (Exception e) {
+	       }
+	   }
 }
 
 
