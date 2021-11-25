@@ -13,6 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/ASUS/Downloads/aspose-words-21.11-jdk16.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

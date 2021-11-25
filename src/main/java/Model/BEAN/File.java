@@ -8,10 +8,11 @@ public class File {
 	private int id_user;
 	private Date date;
 	private String file_name;
-	private int status; 
+	private boolean status; 
 	private Blob data;
 	
-	public File(int id_file, int id_user, Date date, String file_name, int status, Blob data) {
+	public File() {}
+	public File(int id_file, int id_user, Date date, String file_name, boolean status, Blob data) {
 		super();
 		this.id_file = id_file;
 		this.id_user = id_user;
@@ -49,10 +50,10 @@ public class File {
 	public void setFileName(String file_name) {
 		this.file_name = file_name;
 	}
-	public int getStatus() {
+	public boolean getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(boolean status) {
 		this.status = status;
 	}
 	public Blob getData()

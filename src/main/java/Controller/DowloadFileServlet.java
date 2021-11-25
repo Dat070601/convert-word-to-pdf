@@ -3,8 +3,6 @@ package Controller;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
-import java.sql.Connection;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +15,7 @@ import Model.BO.FileBO;
 /**
  * Servlet implementation class DowloadFileServlet
  */
-@WebServlet("/DowloadFileServlet")
+@WebServlet("/DownloadFileServlet")
 public class DowloadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -38,20 +36,15 @@ public class DowloadFileServlet extends HttpServlet {
 	           int id = 0;
 	           try {
 	               id = Integer.parseInt(request.getParameter("id"));
-	           } catch (Exception e) {
-
-	           }
+	           } catch (Exception e) {}
 	           File file = new FileBO().GetFilePDFFromDB(id);
-	           
 	           if (file == null) {
-	               response.getWriter().write("Không tìm thấy data!");
+	               response.getWriter().write("Không tìm thấy file !");
 	               return;
 	           }
 	           
 	           String fileName = file.getFileName();
-	           //System.out.println("File Name: " + fileName);
 	           String contentType = this.getServletContext().getMimeType(fileName);
-	           //System.out.println("Content Type: " + contentType);
 	           response.setHeader("Content-Type", contentType);
 	           response.setHeader("Content-Length", String.valueOf(file.getData().length()));
 	           response.setHeader("Content-Disposition", "inline; filename=\"" + file.getFileName() + "\"");
