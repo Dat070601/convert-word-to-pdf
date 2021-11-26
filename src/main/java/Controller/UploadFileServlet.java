@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import Model.BEAN.File;
-import Model.BEAN.TestUser;
+import Model.BEAN.User;
 import Model.BO.FileBO;
 
 @WebServlet("/UploadFileServlet")
@@ -27,8 +27,8 @@ public class UploadFileServlet extends HttpServlet {
 		{
 			Part filePart = request.getPart("file");
 			// Get user from session
-			TestUser user = new TestUser();
-			user.setId(1);
+			User user = new User();
+			user.setId(69);
 			user.setUsername("admin");
 			user.setPassword("admin");
 			// Get user from session
