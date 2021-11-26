@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
 encoding//src/main/java/Controller/DowloadFileServlet.java=UTF-8
+encoding//src/main/java/Controller/UploadFileServlet.java=UTF-8
 encoding//src/main/java/Model/BO/FileBO.java=UTF-8
 encoding//src/main/java/Model/DAO/FileDAO.java=UTF-8

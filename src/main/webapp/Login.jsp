@@ -7,8 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form name="form1" action="" method= "post">
-	<input type="submit" value="Login">
+	<form name="form1" action="DowloadFileServlet" method= "post">
+	<input type="submit" value="submit">
 	</form>
 </body>
 </html>

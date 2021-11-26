@@ -2,12 +2,17 @@ package Model.BO;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 
-import com.aspose.words.*;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import Model.BEAN.File;
 import Model.DAO.FileDAO;
+import fr.opensagres.poi.xwpf.converter.core.XWPFConverterException;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
+import fr.opensagres.poi.xwpf.converter.pdf.PdfOptions;
 
 public class FileBO {
 	public boolean UploadFile(byte[] data, File file) {
@@ -25,19 +30,16 @@ public class FileBO {
 		return new FileDAO().UpdateFile(file);
 	}
 	
-	public byte[] ConvertFileToPDF(byte[] docFile) throws Exception
-	{
-		ByteArrayInputStream inStream = new ByteArrayInputStream(docFile);
-		// Load Document from inStream
-		Document doc = new Document(inStream);
-		// remove watermark
-		if (doc.getWatermark().getType() == WatermarkType.TEXT) {
-			doc.getWatermark().remove();
-		}
-		// Save the modified document into out stream
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		doc.save(baos, SaveFormat.PDF);
-		return baos.toByteArray();
+	public byte[] toPdf(byte[] docx) throws XWPFConverterException, IOException {
+	    InputStream isFromFirstData = new ByteArrayInputStream(docx);
+	    XWPFDocument document = new XWPFDocument(isFromFirstData);
+	    PdfOptions options = PdfOptions.create();
+	    //return byte array for return in http request.
+	    ByteArrayOutputStream pdf = new ByteArrayOutputStream();
+	    PdfConverter.getInstance().convert(document, pdf, options);
+	    document.write(pdf);
+	    document.close();
+	    return pdf.toByteArray();
 	}
 	
 	public File GetFilePDFFromDB(int id) throws SQLException
@@ -64,7 +66,7 @@ class XuLy extends Thread {
 			try {	
 				System.out.println("Converting " + this.file.getFileName() + " ...");
 				// Convert file
-				this.data = new FileBO().ConvertFileToPDF(this.data);
+				this.data = new FileBO().toPdf(this.data);
 				// Update data
 				this.file.setData(new javax.sql.rowset.serial.SerialBlob(this.data));	
 				this.file.setFileName(this.file.getFileName() + stringEnd);
