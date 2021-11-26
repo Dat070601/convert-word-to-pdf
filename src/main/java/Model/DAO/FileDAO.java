@@ -68,9 +68,9 @@ public class FileDAO {
 	public File GetFilePDFFromDB(int id) throws SQLException
 	{
 		String query = "Select * from Storage where id = ?";
-		PreparedStatement pstm = con.prepareStatement(query);
-		pstm.setInt(1,id);
-		ResultSet rs = pstm.executeQuery();
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setInt(1,id);
+		ResultSet rs = ps.executeQuery();
 		if(rs.next())
 		{
 			String file_name  = rs.getString("FileName");

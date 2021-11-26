@@ -30,16 +30,15 @@ public class FileBO {
 		return new FileDAO().UpdateFile(file);
 	}
 	
-	public byte[] toPdf(byte[] docx) throws XWPFConverterException, IOException {
-	    InputStream isFromFirstData = new ByteArrayInputStream(docx);
-	    XWPFDocument document = new XWPFDocument(isFromFirstData);
+	public byte[] ConvertToFilePDF(byte[] docx) throws XWPFConverterException, IOException {
+	    InputStream first_data = new ByteArrayInputStream(docx);
+	    XWPFDocument doc = new XWPFDocument(first_data);
 	    PdfOptions options = PdfOptions.create();
-	    //return byte array for return in http request.
-	    ByteArrayOutputStream pdf = new ByteArrayOutputStream();
-	    PdfConverter.getInstance().convert(document, pdf, options);
-	    document.write(pdf);
-	    document.close();
-	    return pdf.toByteArray();
+	    ByteArrayOutputStream pdf_file = new ByteArrayOutputStream();
+	    PdfConverter.getInstance().convert(doc, pdf_file, options);
+	    doc.write(pdf_file);
+	    doc.close();
+	    return pdf_file.toByteArray();
 	}
 	
 	public File GetFilePDFFromDB(int id) throws SQLException
@@ -66,7 +65,7 @@ class XuLy extends Thread {
 			try {	
 				System.out.println("Converting " + this.file.getFileName() + " ...");
 				// Convert file
-				this.data = new FileBO().toPdf(this.data);
+				this.data = new FileBO().ConvertToFilePDF(this.data);
 				// Update data
 				this.file.setData(new javax.sql.rowset.serial.SerialBlob(this.data));	
 				this.file.setFileName(this.file.getFileName() + stringEnd);
