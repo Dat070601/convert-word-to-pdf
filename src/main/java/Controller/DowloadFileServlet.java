@@ -12,26 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import Model.BEAN.File;
 import Model.BO.FileBO;
 
-/**
- * Servlet implementation class DowloadFileServlet
- */
 @WebServlet("/DownloadFileServlet")
 public class DowloadFileServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public DowloadFileServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	       try {  
 	           int id = 0;
 	           try {
@@ -39,21 +27,21 @@ public class DowloadFileServlet extends HttpServlet {
 	           } catch (Exception e) {}
 	           File file = new FileBO().GetFilePDFFromDB(id);
 	           if (file == null) {
-	               response.getWriter().write("Không tìm thấy file !");
+	               response.getWriter().write("Không tìm thấy file!");
 	               return;
 	           }
 	           
-	           String fileName = file.getFileName();
-	           String contentType = this.getServletContext().getMimeType(fileName);
-	           response.setHeader("Content-Type", contentType);
+	           String file_name = file.getFileName();
+	           String content_type = this.getServletContext().getMimeType(file_name);
+	           response.setHeader("Content-Type", content_type);
 	           response.setHeader("Content-Length", String.valueOf(file.getData().length()));
 	           response.setHeader("Content-Disposition", "inline; filename=\"" + file.getFileName() + "\"");
-	           Blob fileData = file.getData();
-	           InputStream is = fileData.getBinaryStream();
+	           Blob file_data = file.getData();
+	           InputStream is = file_data.getBinaryStream();
 	           byte[] bytes = new byte[1024];
-	           int bytesRead;
-	           while ((bytesRead = is.read(bytes)) != -1) {
-	               response.getOutputStream().write(bytes, 0, bytesRead);
+	           int bytes_read;
+	           while ((bytes_read = is.read(bytes)) != -1) {
+	               response.getOutputStream().write(bytes, 0, bytes_read);
 	           }
 	           is.close();
 
@@ -66,9 +54,6 @@ public class DowloadFileServlet extends HttpServlet {
 	       }
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
