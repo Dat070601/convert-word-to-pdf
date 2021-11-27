@@ -46,6 +46,15 @@ public class FileBO {
 		return new FileDAO().GetFilePDFFromDB(id);
 	}
 	
+	public int CheckFile(File file, int id_user)
+	{
+		if(file == null)
+			return 1; 
+		else if(file.getUserID() != id_user)
+			return -1; 
+		return 0;
+	}
+	
 	public void CloseConQuietly()
 	{
 		new FileDAO().CloseConQuietly();

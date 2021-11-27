@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Model.BEAN.File;
+import Model.BEAN.User;
 import Model.BO.FileBO;
 
 @WebServlet("/DownloadFileServlet")
@@ -21,16 +22,25 @@ public class DowloadFileServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	       try {  
+	    	   User user_session = null;
 	           int id = 0;
 	           try {
+	        	   user_session = (User) request.getSession().getAttribute("User");
 	               id = Integer.parseInt(request.getParameter("id"));
 	           } catch (Exception e) {}
 	           File file = new FileBO().GetFilePDFFromDB(id);
-	           if (file == null) {
-	               response.getWriter().write("Không tìm thấy file!");
+	           int checked = new FileBO().CheckFile(file, user_session.getId());
+	           if(checked == 1)
+	           {
+	        	   response.getWriter().write("Không tìm thấy file!");
 	               return;
 	           }
-	           
+	           else if(checked == -1)
+	           {
+	        	   response.getWriter().write("Có lỗi!");
+	        	   return;
+	           }
+
 	           String file_name = file.getFileName();
 	           String content_type = this.getServletContext().getMimeType(file_name);
 	           response.setHeader("Content-Type", content_type);
