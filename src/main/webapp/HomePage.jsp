@@ -8,31 +8,37 @@
 <title>Home Page</title>
 <style>
 body {
-background-image: url("https://cdn.trumcongnghe.com/2021/08/119234579_169457918065236_755533166268046471_n-1-1140x570.jpg");
+background-image: url("https://cutewallpaper.org/21/website-background-images-hd/Autodesk-Wallpaper-Website-Background-Hd-Wallpapers-.jpg");
 background-size: 100%;
 }
 table{
-color: White;
+color: Black;
 }
 h1 {
-color: White;
+color: Black;
 }
 h3 {
-color: White;
+color: Black;
 }
 file {
-color: White;
+color: Black;
 }
+
 </style>
 </head>
-<body align="center">
+<body>
+<a href="CheckLogout" style="background-color: #555;
+  							 color: White;
+  							 padding: 0.5em 1em;
+  							 text-decoration: none;
+  							 float: right;">Logout</a>
 <% User user = (User)request.getSession().getAttribute("User"); %>
 <h1 align="center">Xin chào <%= user.getUsername() %>!!</h1>
-	<form action ="UploadFileServlet" method = "post" enctype="multipart/form-data">
+	<form action ="UploadFileServlet" method = "post" enctype="multipart/form-data" align="center">
 		<input type="file" name="file">
 		<input type="submit" value="Tải Lên">
 	</form>
-<p><h3>Các file của bạn</h3></p>
+<p><h3 align="center">Các file của bạn</h3></p>
 <table border="1" align="center" width=100%>   
    <tr>
       <th width=80%>Tên Tệp</th>
@@ -43,6 +49,7 @@ color: White;
    	  <th><a href="DownloadFileServlet?id=1">Download</a></th>
    </tr>
 </table>
-
+<form action="Checklogout" method="post">
+</form>
 </body>
 </html>
