@@ -7,11 +7,11 @@
 <title>Đăng ký</title>
 <style>
 body {
-background-image: url("https://cdn.trumcongnghe.com/2021/08/119234579_169457918065236_755533166268046471_n-1-1140x570.jpg");
+background-image: url("https://cutewallpaper.org/21/website-background-images-hd/Autodesk-Wallpaper-Website-Background-Hd-Wallpapers-.jpg");
 background-size: 100%;
 }
 form {
-color: White;
+color: Black;
 }
 </style>
 </head>

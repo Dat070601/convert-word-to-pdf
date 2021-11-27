@@ -49,6 +49,13 @@ public class UserServlet extends HttpServlet {
 			rd.forward(request, response);
 			break;
 		}
+		case "/CheckLogout": {
+			String destinate = "/Main.jsp";
+			request.getSession().setAttribute("User", null);
+			RequestDispatcher rs = request.getRequestDispatcher(destinate);
+			rs.forward(request, response);
+			break;
+		}
 		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
@@ -63,7 +70,7 @@ public class UserServlet extends HttpServlet {
 		case "/checkLogin":{
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
-			User user = new UserBO().findOne(username, password);
+			User user = new UserBO().FindUser(username, password);
 			if (user != null) {
 				String destinate = "/HomePage.jsp";
 				request.getSession().setAttribute("User", user);
@@ -82,7 +89,7 @@ public class UserServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 			User user = new User(username,password);
-			new UserBO().ChenTK(user);
+			new UserBO().InsertUser(user);
 			String destinate="/Login.jsp";
 			RequestDispatcher rd = request.getRequestDispatcher(destinate);
 			rd.forward(request, response);
