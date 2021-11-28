@@ -5,10 +5,12 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 import Model.BEAN.File;
+import Model.BEAN.User;
 import Model.DAO.FileDAO;
 import fr.opensagres.poi.xwpf.converter.core.XWPFConverterException;
 import fr.opensagres.poi.xwpf.converter.pdf.PdfConverter;
@@ -52,7 +54,15 @@ public class FileBO {
 			return 1; 
 		else if(file.getUserID() != id_user)
 			return -1; 
+		else if (!file.getStatus())
+			return 2;
 		return 0;
+	}
+
+	public ArrayList<File> GetFiles(User user) {
+		if (user != null)
+			return new FileDAO().GetFiles(user);
+		return null;
 	}
 	
 	public void CloseConQuietly()
