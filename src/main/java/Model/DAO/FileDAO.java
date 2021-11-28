@@ -7,9 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.sql.Date;
 
 import Model.BEAN.File;
+import Model.BEAN.User;
 
 public class FileDAO {
 	Connection con;
@@ -90,6 +92,28 @@ public class FileDAO {
 	           }
 	       } catch (Exception e) {}
 	 }
+
+	public ArrayList<File> GetFiles(User user) {
+		try {
+			ArrayList<File> listFiles = new ArrayList<File>();
+			String query = "select * from storage where userid=?";
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setInt(1, user.getId());
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				File f = new File();
+				f.setFileID(rs.getInt("ID"));
+				f.setFileName(rs.getString("FileName"));
+				f.setStatus(rs.getBoolean("Status"));
+				f.setDate(rs.getDate("Date"));
+				listFiles.add(f);
+			}
+			return listFiles;
+		} catch (Exception e) {
+			System.out.println("Get user's file error: " + e.toString());
+			return null;
+		}
+	}
 }
 
 

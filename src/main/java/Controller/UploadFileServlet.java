@@ -3,6 +3,7 @@ package Controller;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -26,27 +27,28 @@ public class UploadFileServlet extends HttpServlet {
 		try
 		{
 			Part filePart = request.getPart("file");
-			// Get user from session
-			User user = new User();
-			user.setId(69);
-			user.setUsername("admin");
-			user.setPassword("admin");
-			// Get user from session
+			User user = (User)request.getSession().getAttribute("User");
+			String message = "";
 			if (filePart != null) {
 				byte[] data = filePart.getInputStream().readAllBytes();
-				File file = new File();
-				file.setDate(new java.sql.Date(new java.util.Date().getTime()));
 				String[] nameParts = filePart.getSubmittedFileName().split("\\.");
-				file.setFileName(String.join("", Arrays.copyOfRange(nameParts, 0, nameParts.length - 1)));
-				file.setStatus(false);
-				file.setUserID(user.getId());
-				if (new FileBO().UploadFile(data, file)) {
-					// send upload complete message
-					response.getWriter().write("Upload successful !");
-				} else {
-					response.getWriter().write("Upload failure !");
-					// send upload failure message
+				String extension = nameParts[nameParts.length - 1];
+				if (!"doc".equals(extension) && !"docx".equals(extension)) {
+					message = "extension error";
+				} else {	
+					File file = new File();
+					file.setDate(new java.sql.Date(new java.util.Date().getTime()));
+					file.setFileName(String.join("", Arrays.copyOfRange(nameParts, 0, nameParts.length - 1)));
+					file.setStatus(false);
+					file.setUserID(user.getId());
+					if (new FileBO().UploadFile(data, file))
+						message = "success";
+					else
+						message = "upload error";
 				}
+				request.setAttribute("message", message);
+				RequestDispatcher rd = getServletContext().getRequestDispatcher("/LoadFileServlet");
+				rd.forward(request, response);
 			}
 		} catch (IllegalStateException e) {
 			System.out.println("File size lager than max file size: " + e.toString());

@@ -7,12 +7,13 @@ import java.util.List;
 import Model.BEAN.User;
 
 public class UserBO {
-	public User FindUser(String username,String password){
-		return new UserDAO().findOne(username, password);
+	public User FindUser(String username,String password) {
+		if ("".equals(username) || "".equals(password))
+			return null;
+		return new UserDAO().FindUser(username, password);
 	}
-	public void InsertUser(User tk) {
-		UserDAO dao = new UserDAO();
-		dao.ThemTK(tk);
+	public void InsertUser(User user) {
+		new UserDAO().InsertUser(user);
 		
 	}
 }
